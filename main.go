@@ -37,19 +37,23 @@ func seperatorSplit(r rune) bool {
 
 func filterMetrics(text string) string {
 	var ret []string
+	var hasAllowed bool = len(allowArray) > 0
+	var hasBlocked bool = len(blockArray) > 0
 	lines := strings.Split(text, "\n")
 
 	for _, line := range lines {
-		if len(blockArray) > 0 {
-			if stringInSlice(line, blockArray) {
-				continue
-			}
-		}
+		var isAllowed bool = (hasAllowed && stringInSlice(line, allowArray))
+		var isBlocked bool = (hasBlocked && stringInSlice(line, blockArray))
 
-		if len(allowArray) > 0 {
-			if stringInSlice(line, allowArray) {
+		if hasAllowed {
+			if isAllowed && !isBlocked {
 				ret = append(ret, line)
 			}
+
+			continue
+		}
+
+		if isBlocked {
 			continue
 		}
 
