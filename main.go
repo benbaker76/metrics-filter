@@ -90,9 +90,9 @@ func requestHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	port = getEnv("PORT", "9200")
 	host = getEnv("HOST", "0.0.0.0")
-	remoteMetricsEndpoint = getEnv("REMOTE_METRICS_ENDPOINT", "http://node-exporter:9100/metrics")
-	allowList := getEnv("ALLOW_LIST", "promhttp_,process_")
-	blockList := getEnv("BLOCK_LIST", "_errors,_memory")
+	remoteMetricsEndpoint = getEnv("REMOTE_METRICS_ENDPOINT", "")
+	allowList := getEnv("ALLOW_LIST", "")
+	blockList := getEnv("BLOCK_LIST", "")
 
 	allowArray = strings.FieldsFunc(allowList, seperatorSplit)
 	blockArray = strings.FieldsFunc(blockList, seperatorSplit)
